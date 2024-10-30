@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hello React!</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<!-- package react -->
+		<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+		<!-- package react dom -->
+		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+		<!-- Don't use this in production: -->
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+		<script>
+			// function react yang akan dirender pada root.render, nama function harus diawali kapital
+			function App() {
+				// react useState ada time sebagai variable dan setTime sebagai function untuk assign value ke variable time
+				// pada deklar ini juga diisi dengan nilai default bisa diisi string, number, array dll
+				// seiring setTime dipanggil/di-assign value baru, useState juga  akan membuat komponen re-render
+				const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+				// react useEffect digunakan untuk menjalankan side effects—seperti membaca data atau melakukan perubahan yang tergantung
+				// pada kondisi tertentu—setiap kali komponen dirender atau terjadi perubahan pada suatu nilai atau dependency
+				React.useEffect(function () {
+					// setInterval function dari javascript dengan interval 1 detik / 1000 mili detik
+					setInterval(function () {
+						setTime(new Date().toLocaleTimeString());
+					}, 1000);
+				}, []);
+
+				return React.createElement(
+					"header",
+					null,
+					`Hello Pure React! It's time : ${time}`
+				);
+			}
+
+			// pertama container di define dengan id root
+			const container = document.getElementById("root");
+			// kedua root di define sebagai ReacDOM dengan container tadi
+			const root = ReactDOM.createRoot(container);
+			// lalu di dalam id root akan ditambahkan/dirender element yang ada pada function App
+			root.render(React.createElement(App));
+		</script>
+	</body>
+</html>
