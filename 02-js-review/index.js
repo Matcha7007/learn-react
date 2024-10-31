@@ -427,3 +427,25 @@ const booksAfterUpdate = booksAfterDelete.map((book) =>
 	book.id === 1 ? { ...book, pages: 1 } : book
 );
 booksAfterUpdate;
+
+// ASYNCHRONUS JS: PROMISES
+// intinya promises ini akan memuat atau mengolah response sampai benar benar komplit
+// fetch() lalu diikuti promise .then() untuk merubah respon dari json
+// lalu diikuti promise lagi .then() untuk mendapatkan final data dari promise pertama
+fetch("https://jsonplaceholder.typicode.com/todos")
+	.then((res) => res.json())
+	.then((data) => console.log(data));
+
+console.log("Halo");
+
+// ASYNCHRONUS JS: ASYNC AWAIT
+async function getTodos() {
+	const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+	const data = await res.json();
+	console.log(data);
+
+	return data;
+}
+
+const todos = getTodos();
+todos;
