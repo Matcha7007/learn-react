@@ -321,7 +321,7 @@ console.log(getTotalReviewCount(book));
 // 1. THE ARRAY MAP METHOD
 // array map method ini bertujuan untuk membuat array baru berdasar array yang ada dengan method map, lenth array akan sama dengan yang ada
 // contoh x adalah array dari [1, 2, 3, 4, 5]
-// di dalam map ada arrow function yang akan me return hasil map setiap elementnya ke array baru
+// di dalam map ada callback function yang akan me return hasil map setiap elementnya ke array baru
 // di sini el masing-masing ditambah 2
 const x = [1, 2, 3, 4, 5].map((el) => el + 2);
 console.log(x); //[ 3, 4, 5, 6, 7 ] ​​​​​at ​​​​​​​​x
@@ -346,3 +346,30 @@ essentialData;
 // 	},
 // 	{ title: 'A Game of Thrones', author: 'George R. R. Martin' }
 // ]
+
+// 2. THE ARRAY FILTER METHOD
+// array filter method ini bertujuan untuk membuat array baru berdasar array yang ada dengan method filter,
+// array dilooping sepanjang lengthnya dan bisa kita filter berdasarkan kondisi yang memenuhi kriteria / true yang akan direturn
+// contoh di bawah books akan difilter berdasarkan pages > 500
+// jadi jika masing masing object book yang dilooping mempunyai pages lebih dari 500,
+// maka objectnya akan ditambahkan ke dalam array baru
+const longBooks = books.filter((book) => book.pages > 500);
+longBooks;
+
+// contoh lagi book akan difilter dengan kondisi pages > 500 dan hasMovieAdaption
+// di bawah ini menggunakan dua kali filter setelah filter pertama pages > 500 dan filter ke dua hasMovieAdaption
+// ini bisa dikombinasikan beberapa kali filter karena filter pertama akan menghasilkan array baru
+// lalu array baru itu difilter lagi untuk menghasilkan array terbaru
+// atau mau menggunakan satu filter bisa jadi kondisinya digabung menggunakan operator logical
+const longBooksWithMovie = books
+	.filter((book) => book.pages > 500)
+	.filter((book) => book.hasMovieAdaption);
+longBooksWithMovie;
+
+// contoh filter dikombinasi dengan includes dan map
+// di bawah ini books akan difilter dengan kondisi array genres yang mempunyai value 'adventure'
+// setelah difilter, array baru akan dimap untuk menjadi array baru yang hanya berisi titlenya saja
+const adventureBooks = books
+	.filter((book) => book.genres.includes("adventure"))
+	.map((book) => book.title);
+adventureBooks; // [ 'The Lord of the Rings', 'Duno', 'Harry Potter and the Philosopher\'s Stone' ] ​​​​​at ​​​​​​​​adventureBooks
