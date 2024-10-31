@@ -290,3 +290,27 @@ const rightCount = book.reviews.librarything.reviewsCount ?? "NO DATA";
 // book.reviews.librarything.reviewsCount bernilai null atau undefined,
 // maka nulish coalescing akan mengembalikan nilai operand 2
 rightCount; // 0 ​​​​​at ​​​​​​​​rightCount
+
+// OPTIONAL CHAINING
+// ini digunakan untuk cek apakah property dari object yang diambil ada atau tidak
+// misal pada akses object ini const goodreads = book.reviews.goodreads.reviewsCount;
+// js akan membaca object book lalu mencari property reviews -> cari property goodreads -> cari property reviewsCount
+// jika salah satu property tidak ada akan dibikin undefined oleh js,
+// misal pada const goodreads ini property goodreads tidak ada pada object maka property sebelumnya yang dibaca sampai goodreads diubah menjadi undefined
+// sehingga menjadi undefined.reviewsCount lalu dibaca lagi undefined punya property reviewsCount atau tidak
+// lalu js akan mengembalikan error Cannot read properties of undefined (reading 'reviewsCount')
+// karena object undefined tidak mempunyai property reviewsCount
+// untuk mencegah error ini bisa menggunakan optional chaining '?' di belakang property/object
+// jadi seperti ini const goodreads = book?.reviews?.goodreads?.reviewsCount;
+// maka jika kita tambahkan optional chaining js akan membaca satu persatu dan dicek apakah ada atau tidak
+// kalau tidak ada akan langsung mengembalikan undefined tanpa membaca lagi sisa property/objectnya
+// optional chaining dapat dikombinasikan nulish coalescing untuk mendefine sebuah value jika propery yang kita cari tidak ada atau undefined
+// contoh const goodreads = book?.reviews?.goodreads?.reviewsCount ?? 0;
+// jadi jika property/object tidak ada atau undefined maka value default goodreads akan diset menjadi 0
+function getTotalReviewCount(book) {
+	const goodreads = book?.reviews?.goodreads?.reviewsCount ?? 0;
+	const librarything = book?.reviews?.librarything?.reviewsCount ?? 0;
+	return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
