@@ -314,3 +314,35 @@ function getTotalReviewCount(book) {
 }
 
 console.log(getTotalReviewCount(book));
+
+// ARRAY FUNCTION
+// array function ini terlihat sama seperti foreach yang melooping array sepanjang lenth arraynya, hanya menjadi simple codenya
+
+// 1. THE ARRAY MAP METHOD
+// array map method ini bertujuan untuk membuat array baru berdasar array yang ada dengan method map, lenth array akan sama dengan yang ada
+// contoh x adalah array dari [1, 2, 3, 4, 5]
+// di dalam map ada arrow function yang akan me return hasil map setiap elementnya ke array baru
+// di sini el masing-masing ditambah 2
+const x = [1, 2, 3, 4, 5].map((el) => el + 2);
+console.log(x); //[ 3, 4, 5, 6, 7 ] ​​​​​at ​​​​​​​​x
+
+const books = getBooks();
+const essentialData = books.map((book) => {
+	return {
+		title: book.title,
+		author: book.author,
+	};
+});
+
+essentialData;
+// hasil mapping books menjadi array object baru
+// [
+// 	{ title: 'The Lord of the Rings', author: 'J. R. R. Tolkien' },
+// 	{ title: 'The Cyberiad', author: 'Stanishlaw Lem' },
+// 	{ title: 'Duno', author: 'Frank Herbert' },
+// 	{
+// 	  title: 'Harry Potter and the Philosopher\'s Stone',
+// 	  author: 'J. K. Rowling'
+// 	},
+// 	{ title: 'A Game of Thrones', author: 'George R. R. Martin' }
+// ]
