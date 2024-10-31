@@ -387,3 +387,22 @@ const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0);
 //   acc akan berisikan nilai default dari elemen pertama pada array, ini akan membuat ambigu/salah jika kita ingin menjumlahkan nilai
 // - lalu ada book sebagai currentValue, ini menjadi elemen array yang diiterasi
 pagesAllBooks;
+
+// 4. THE ARRAY SORT METHOD
+// seperti namanya sort ini digunakan untuk mengurutkan data secara asc atau desc
+// tetapi berbeda dengan 3 method di atas, sort ini mengubah array asli juga. jadi ikut disorting istilahnya kalo 3 method sebelumnya membuatt array baru
+// contoh
+const arr = [3, 6, 2, 8, 5];
+const arrSorted = arr.sort((a, b) => a - b);
+arrSorted; //[ 2, 3, 5, 6, 8 ] ​​​​​at ​​​​​​​​arrSorted​​
+arr; // [ 2, 3, 5, 6, 8 ] ​​​​​at ​​​​​​​​arr
+// dari contoh ini, arr akan disort dari nilai terkecil ke terbesar ke dalam arrat baru yaitu arrSorted
+// tetapi arr yang asli juga ikut disorting
+// jika kita tidak menginginkan hal ini, perlu kita copy terlebih dahulu arraynya menggunakan slice() lalu disorting
+const descArrSorted = arrSorted.slice().sort((a, b) => b - a);
+descArrSorted; // [ 8, 6, 5, 3, 2 ] ​​​​​at ​​​​​​​​descArrSorted
+arrSorted; // [ 2, 3, 5, 6, 8 ] ​​​​​at ​​​​​​​​arrSorted​​
+
+// contoh sort pada array object books
+const sortedPagesBooks = books.slice().sort((a, b) => a.pages - b.pages);
+sortedPagesBooks;
