@@ -406,3 +406,24 @@ arrSorted; // [ 2, 3, 5, 6, 8 ] ​​​​​at ​​​​​​​​arrSor
 // contoh sort pada array object books
 const sortedPagesBooks = books.slice().sort((a, b) => a.pages - b.pages);
 sortedPagesBooks;
+
+// IMUTTABLE ARRAY /
+// 1. ADD OBJECT TO ARRAY OBJECT
+const newBook = {
+	id: 6,
+	title: "Harry Potter and The Gang",
+	author: "J. K. Rowling",
+};
+
+const booksAfterAdd = [...books, newBook];
+booksAfterAdd;
+
+// 2. DELETE OBJECT FROM ARRAY OBJECT
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3);
+booksAfterDelete;
+
+// 3. UPDATE OBJECT AT ARRAY OBJECT
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+	book.id === 1 ? { ...book, pages: 1 } : book
+);
+booksAfterUpdate;
