@@ -373,3 +373,17 @@ const adventureBooks = books
 	.filter((book) => book.genres.includes("adventure"))
 	.map((book) => book.title);
 adventureBooks; // [ 'The Lord of the Rings', 'Duno', 'Harry Potter and the Philosopher\'s Stone' ] ​​​​​at ​​​​​​​​adventureBooks
+
+// 3. THE ARRAY REDUCE METHOD
+// reduce ini adalah salah satu method array di js, berfungsi untuk mengolah elemen-elemen dalam array
+// direduce manjadi hasil akhir tunggal. Reduce biasa digunakan untuk menghitung total,
+// menggabungkan data, atau menjalankan operasi kumulatif lainnya, bentuknya someArray.reduce(callback, initialValue)
+// contoh
+const pagesAllBooks = books.reduce((acc, book) => acc + book.pages, 0);
+// pada contoh books.reduce((acc, book) => acc + book.pages, 0);
+// (acc, book) => acc + book.pages sebagai callback dan 0 sebagai initialValue
+// - dalam callback func di atas, terdapat acc alias accumulator, di mana acc ini akan menampung nilai kumulatif pada tiap iterasi
+//   acc juga akan mempunyai nilai awal jika initialValue diset saat method reduce dibuat, tetapi jika tidak ada inittialValue
+//   acc akan berisikan nilai default dari elemen pertama pada array, ini akan membuat ambigu/salah jika kita ingin menjumlahkan nilai
+// - lalu ada book sebagai currentValue, ini menjadi elemen array yang diiterasi
+pagesAllBooks;
