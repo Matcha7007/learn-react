@@ -141,7 +141,7 @@ function Footer() {
 		<footer className="footer">
 			{isOpen ? (
 				// extract to another component untuk memudahkan maintain pada skala besar atau code terlalu panjang
-				<Order closeHour={closeHour} />
+				<Order closeHour={closeHour} openHour={openHour} />
 			) : (
 				<p>
 					We're happy to welcome you between {openHour}:00 to {closeHour}:00
@@ -151,11 +151,12 @@ function Footer() {
 	);
 }
 
-function Order(props) {
+function Order({ closeHour, openHour }) {
 	return (
 		<div className="order">
 			<p>
-				We're open until {props.closeHour}:00. Come visit us or order online.
+				We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+				online.
 			</p>
 			<button className="btn">Order</button>
 		</div>
