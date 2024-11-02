@@ -105,11 +105,19 @@ function Menu() {
 			{/* render elemen dengan kondisi ternary operator */}
 			{/* ini render seperti if else jadi kalo true akan render elemen A dan jika false akan render elemen B */}
 			{numPizzas > 0 ? (
-				<ul className="pizzas">
-					{pizzas.map((pizza) => (
-						<Pizza pizzaObj={pizza} key={pizza.name} />
-					))}
-				</ul>
+				// add react fragment <></> atau <React.Fragment></React.Fragment>
+				// untuk mereturn lebih dari satu element tanpa dibungkus elemen lain
+				<>
+					<p>
+						Authentic Italian cuisine. 6 creative dishes to choose from. All
+						from our stone oven, all organic, all delicious.
+					</p>
+					<ul className="pizzas">
+						{pizzas.map((pizza) => (
+							<Pizza pizzaObj={pizza} key={pizza.name} />
+						))}
+					</ul>
+				</>
 			) : (
 				<p>We're still working on our menu. Please come back later :)</p>
 			)}
