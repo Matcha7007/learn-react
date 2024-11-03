@@ -7,19 +7,39 @@ const messages = [
 ];
 
 export default function App() {
+	// tiap component memanage statenya sendiri sendiri
+	// meski dipanggil beberapa kali seperti component <Step />
+	return (
+		<div>
+			<Step />
+			<Step />
+		</div>
+	);
+}
+
+function Step() {
 	const [step, setStep] = useState(1);
 	const [isOpen, setIsOpen] = useState(true);
 
+	// useState ini akan memicu rerendering pada component kalo
+	// value state diubah
+	// misal yang isOpen sebagai variable dari statenya dan setIsOpen
+	// sebagai function callback untuk meng-set value dari variable statenya
+	// contoh setIsOpen(true/false) berarti ini akan mengubah isOpen menjadi value yang tadi diset
+	// sebenernya setIsOpen() ini ada callback function
+	// jadi setIsOpen(callback) -> setIsOpen((currentStateValue) => !currentStateValue)
+
 	function handleNext() {
-		if (step < messages.length) setStep(step + 1);
+		if (step < messages.length) setStep((s) => s + 1);
 	}
+
 	function handlePrevious() {
-		if (step > 1) setStep(step - 1);
+		if (step > 1) setStep((s) => s - 1);
 	}
 
 	return (
-		<>
-			<button className="close" onClick={() => setIsOpen(!isOpen)}>
+		<div>
+			<button className="close" onClick={() => setIsOpen((is) => !is)}>
 				&times;
 			</button>
 			{isOpen && (
@@ -46,6 +66,6 @@ export default function App() {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
