@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function App() {
 	const [items, setItems] = useState([]);
 
-	function handleAddItems(item) {
+	function handleAddItem(item) {
 		setItems((items) => [...items, item]);
 	}
 
@@ -11,17 +11,29 @@ export default function App() {
 		setItems((items) => items.filter((item) => item.id !== id));
 	}
 
+	function handleToggleItem(id) {
+		setItems((items) =>
+			items.map((item) =>
+				item.id === id ? { ...item, packed: !item.packed } : item
+			)
+		);
+	}
+
 	// karena component Form dan PackingList ini perlu state yang sama
 	// sedangkan posisinya mereka siblings atau sejajar bukan parent - child
 	// jadi perlu buat state nya di parent component dari Form dan PackingList
-	// lalu untuk mengambil data dari Form dihandle oleh function handleAddItems, yang mana akan dipanggil dari Form saat submit untuk di-setItems
+	// lalu untuk mengambil data dari Form dihandle oleh function handleAddItem, yang mana akan dipanggil dari Form saat submit untuk di-setItems
 	// nah sedangkan array dari items ini dikirim ke PackingList untuk dirender
 
 	return (
 		<div className="app">
 			<Logo />
-			<Form onAddItems={handleAddItems} />
-			<PackingList onDeleteItem={handleDeleteItem} items={items} />
+			<Form onAddItems={handleAddItem} />
+			<PackingList
+				onDeleteItem={handleDeleteItem}
+				onToggleItem={handleToggleItem}
+				items={items}
+			/>
 			<Stats />
 		</div>
 	);
@@ -76,21 +88,31 @@ function Form({ onAddItems }) {
 	);
 }
 
-function PackingList({ items, onDeleteItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem }) {
 	return (
 		<div className="list">
 			<ul>
 				{items.map((item) => (
-					<Item key={item.id} onDeleteItem={onDeleteItem} item={item} />
+					<Item
+						key={item.id}
+						onDeleteItem={onDeleteItem}
+						onToggleItem={onToggleItem}
+						item={item}
+					/>
 				))}
 			</ul>
 		</div>
 	);
 }
 
-function Item({ item, onDeleteItem }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
 	return (
 		<li>
+			<input
+				type="checkbox"
+				value={item.packed}
+				onChange={() => onToggleItem(item.id)}
+			/>
 			<span style={item.packed ? { textDecoration: "line-through" } : {}}>
 				{item.quantity} {item.description}
 			</span>
