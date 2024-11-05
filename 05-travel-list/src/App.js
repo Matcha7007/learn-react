@@ -19,6 +19,13 @@ export default function App() {
 		);
 	}
 
+	function handleClearList() {
+		const confirmed = window.confirm(
+			"Are you sure you want to delete all items?"
+		);
+		if (confirmed) setItems([]);
+	}
+
 	// karena component Form dan PackingList ini perlu state yang sama
 	// sedangkan posisinya mereka siblings atau sejajar bukan parent - child
 	// jadi perlu buat state nya di parent component dari Form dan PackingList
@@ -32,6 +39,7 @@ export default function App() {
 			<PackingList
 				onDeleteItem={handleDeleteItem}
 				onToggleItem={handleToggleItem}
+				onClearList={handleClearList}
 				items={items}
 			/>
 			<Stats items={items} />
@@ -88,9 +96,10 @@ function Form({ onAddItems }) {
 	);
 }
 
-function PackingList({ items, onDeleteItem, onToggleItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem, onClearList }) {
 	const [sortBy, setSortBy] = useState("input");
 	let sortedItems;
+	const isClear = items.length > 0;
 
 	if (sortBy === "input") sortedItems = items;
 	if (sortBy === "description")
@@ -101,6 +110,11 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
 		sortedItems = items
 			.slice()
 			.sort((a, b) => Number(a.packed) - Number(b.packed));
+
+	function handleClearList() {
+		onClearList();
+		setSortBy("input");
+	}
 
 	return (
 		<div className="list">
@@ -120,6 +134,7 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
 					<option value="description">Sort by description</option>
 					<option value="packed">Sort by packed status</option>
 				</select>
+				{isClear ? <button onClick={handleClearList}>Clear List</button> : null}
 			</div>
 		</div>
 	);
