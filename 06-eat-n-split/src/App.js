@@ -49,6 +49,18 @@ export default function App() {
 		setShowFormAddFriend(false);
 	}
 
+	function handleSplitBill(value) {
+		setFriends((friends) =>
+			friends.map((friend) =>
+				friend.id === selectedFriend.id
+					? { ...friend, balance: friend.balance + value }
+					: friend
+			)
+		);
+
+		setSelectedFriend(null);
+	}
+
 	return (
 		<div className="app">
 			<div className="sidebar">
@@ -62,7 +74,9 @@ export default function App() {
 					{showFormAddFriend ? "close" : "Add Friend"}
 				</Button>
 			</div>
-			{selectedFriend && <FormSplitBill friend={selectedFriend} />}
+			{selectedFriend && (
+				<FormSplitBill onSplitbill={handleSplitBill} friend={selectedFriend} />
+			)}
 		</div>
 	);
 }
@@ -152,21 +166,44 @@ function FormAddFriend({ onAddFriend }) {
 	);
 }
 
-function FormSplitBill({ friend }) {
+function FormSplitBill({ friend, onSplitbill }) {
+	const [bill, setBill] = useState("");
+	const [paidByUser, setPaidByUser] = useState("");
+	const paidByFriend = bill ? bill - paidByUser : "";
+	const [isPaying, setIsPaying] = useState("user");
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		if (!bill || !paidByUser) return;
+		onSplitbill(isPaying === "user" ? paidByFriend : -paidByUser);
+	}
+
 	return (
-		<form className="form-split-bill">
+		<form className="form-split-bill" onSubmit={handleSubmit}>
 			<h2>Split a bill with {friend.name}</h2>
 			<label>G Bill value</label>
-			<input type="text" />
+			<input
+				type="text"
+				value={bill}
+				onChange={(e) => setBill(Number(e.target.value))}
+			/>
 
 			<label>G Your expense</label>
-			<input type="text" />
+			<input
+				type="text"
+				value={paidByUser}
+				onChange={(e) =>
+					setPaidByUser(
+						Number(e.target.value) > bill ? paidByUser : Number(e.target.value)
+					)
+				}
+			/>
 
 			<label>G {friend.name}'s expense</label>
-			<input type="text" disabled />
+			<input type="text" disabled value={paidByFriend} />
 
 			<label>G Who is the paying?</label>
-			<select>
+			<select value={isPaying} onChange={(e) => setIsPaying(e.target.value)}>
 				<option value="user">You</option>
 				<option value="friend">{friend.name}</option>
 			</select>
