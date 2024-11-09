@@ -64,6 +64,7 @@ export default function App() {
 				<Box>
 					<MovieList movies={movies} />
 				</Box>
+				{/* <Box2 element={<MovieList movies={movies} />} /> */}
 				<Box>
 					<WatchedSummary watched={watched} />
 					<WatchedList watched={watched} />
@@ -118,6 +119,7 @@ function Main({ children }) {
 }
 
 function Box({ children }) {
+	//parsing component as children
 	const [isOpen, setIsOpen] = useState(true);
 
 	return (
@@ -126,6 +128,21 @@ function Box({ children }) {
 				{isOpen ? "–" : "+"}
 			</button>
 			{isOpen && children}
+		</div>
+	);
+}
+
+function Box2({ element }) {
+	//parsing component as element props
+	//kaya di router react
+	const [isOpen, setIsOpen] = useState(true);
+
+	return (
+		<div className="box">
+			<button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
+				{isOpen ? "–" : "+"}
+			</button>
+			{isOpen && element}
 		</div>
 	);
 }
