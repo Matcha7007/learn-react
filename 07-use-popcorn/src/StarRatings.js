@@ -1,14 +1,30 @@
 import React from "react";
 
-export default function StarRatings({ maxRatings }) {
+const containerStyle = {
+	display: "flex",
+	alignItems: "center",
+	gap: "16px",
+};
+
+const containerStarStyle = {
+	display: "flex",
+	gap: "4px",
+};
+
+const textStyle = {
+	lineHeight: "1",
+	margin: "0",
+};
+
+export default function StarRatings({ maxRatings = 5 }) {
 	return (
-		<div>
-			<div>
+		<div style={containerStyle}>
+			<div style={containerStarStyle}>
 				{Array.from({ length: maxRatings }, (_, i) => (
 					<span>s{i + 1}</span>
 				))}
-				<p>10</p>
 			</div>
+			<p style={textStyle}>10</p>
 		</div>
 	);
 }
