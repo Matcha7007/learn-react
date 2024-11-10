@@ -65,7 +65,41 @@ function TabContent({ item }) {
 	const [likes, setLikes] = useState(0);
 
 	function handleInc() {
+		// update state seperti ini / tidak menggunakan callback function di dalamnya
+		// normal - normal saja, tetapi lebih bagusnya memakai callback function
+		// seperti di handleTripleInc()
 		setLikes(likes + 1);
+	}
+
+	function handleTripelInc() {
+		// kalo menggunakan callback function seperti ini, value likes akan diambil paling terbaru meski sudah diupdate di atas sekali
+		// jadi kalo dipanggil 3x gini jadi
+		// likes = 0, likes = likes + 1 = 1
+		setLikes((likes) => likes + 1);
+		// likes = 1, likes = likes + 1 = 2
+		setLikes((likes) => likes + 1);
+		// likes = 2, likes = likes + 1 = 3
+		setLikes((likes) => likes + 1);
+
+		// berbeda kalo langsung seperti ini meski 3x dipanggil react menganggap perubahannya sama
+		// si setLikes pake value likes yang terakhir aja ga berkala manggil terbaru
+		// likes = 0, likes + 1 = 1
+		// setLikes(likes + 1);
+		// likes = 0, likes + 1 = 1
+		// setLikes(likes + 1);
+		// likes = 0, likes + 1 = 1
+		// setLikes(likes + 1);
+	}
+
+	function handleUndo() {
+		setShowDetails(true);
+		setLikes(0);
+	}
+
+	function handleUndoAfterWait() {
+		// set timeout seperti ini pada react 18 bisa digunakan langsung
+		// kalo di react 18 ke bawah mesti di dalam useEffect
+		setTimeout(handleUndo, 2000);
 	}
 
 	return (
@@ -81,13 +115,13 @@ function TabContent({ item }) {
 				<div className="hearts-counter">
 					<span>{likes} ❤️</span>
 					<button onClick={handleInc}>+</button>
-					<button>+++</button>
+					<button onClick={handleTripelInc}>+++</button>
 				</div>
 			</div>
 
 			<div className="tab-undo">
-				<button>Undo</button>
-				<button>Undo in 2s</button>
+				<button onClick={handleUndo}>Undo</button>
+				<button onClick={handleUndoAfterWait}>Undo in 2s</button>
 			</div>
 		</div>
 	);
